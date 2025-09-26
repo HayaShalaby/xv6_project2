@@ -92,6 +92,32 @@ atoi(const char *s)
   return n;
 }
 
+float
+atof(const char *s)
+{
+    float n;
+
+    n = 0.0;
+
+    while('0' <= *s && *s <= '9'){
+    n = n*10.0 + *s++ - '0';
+    }
+
+
+    // fractional part
+    if (*s == '.') {
+        s++;
+        float place = 0.1;
+        while ('0' <= *s && *s <= '9') {
+            n += (*s - '0') * place;
+            place *= 0.1;
+            s++;
+        }
+    }
+
+    return n;
+}
+
 void*
 memmove(void *vdst, const void *vsrc, int n)
 {
@@ -104,3 +130,36 @@ memmove(void *vdst, const void *vsrc, int n)
     *dst++ = *src++;
   return vdst;
 }
+
+float 
+avg(float array[], int count){
+    // A function to calculate the average of a given float array of numbers 
+    float sum, avg; 
+    sum = 0;
+
+    for(int i = 0; i < count; i = i + 1){
+        sum = sum + array[i];
+    }
+
+
+    avg = sum / count;
+
+    return avg;
+}
+
+float 
+min(float array[], int count){
+    sort(array, count);
+
+    return array[0];
+}
+
+float 
+max(float array[], int count){
+    sort(array, count);
+
+    return array[count - 1];
+}
+
+void
+sort(float array[], int count){printf(1, "Sort");}
