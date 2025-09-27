@@ -149,17 +149,88 @@ avg(float array[], int count){
 
 float 
 min(float array[], int count){
-    sort(array, count);
+    mergeSort(array, count);
 
     return array[0];
 }
 
 float 
 max(float array[], int count){
-    sort(array, count);
+    mergeSort(array, count);
 
     return array[count - 1];
 }
 
-void
-sort(float array[], int count){printf(1, "Sort");}
+void merge(int arr[], int left, int mid, int right) 
+{
+    // calculate sizes of the two halves
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    
+    // temporary arrays for left and right halves
+    int L[n1], R[n2];
+    
+    // copy data to temporary arrays L[] and R[]
+    for (int i = 0; i < n1; i++)
+    {
+        L[i] = arr[left + i];
+    }
+    
+    for (int j = 0; j < n2; j++)
+    {
+        R[j] = arr[mid + 1 + j];
+    }
+    
+    int i = 0, j = 0, k = left;
+
+    // merge the temporary arrays back into arr
+    while (i < n1 && j < n2) 
+    {
+        if (L[i] <= R[j]) // pick from left array if smaller
+        {
+            arr[k] = L[i];
+            i++;
+        } 
+        else // pick from right array if smaller
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    
+    // copy remaining elements of L[] (if any still remain)
+    while (i < n1) 
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    
+    // copy remaining elements of R[] (if any still remain)
+    while (j < n2) 
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+// recursive merge sort function
+void mergeSort(int arr[], int left, int right) 
+{
+    if (left < right) 
+    {
+        // find the midpoint
+        int mid = left + (right - left) / 2;
+
+        // sort the first half
+        mergeSort(arr, left, mid);
+
+        // sort the second half
+        mergeSort(arr, mid + 1, right);
+
+        // merge the two sorted halves
+        merge(arr, left, mid, right);
+    }
+}
