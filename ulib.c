@@ -95,14 +95,22 @@ atoi(const char *s)
 float
 atof(const char *s)
 {
-    float n;
+    float n = 0.0;
+    int sign = 1;
 
-    n = 0.0;
-
-    while('0' <= *s && *s <= '9'){
-    n = n*10.0 + *s++ - '0';
+    // handle sign
+    if (*s == '-') {
+        sign = -1;
+        s++;
+    } else if (*s == '+') {
+        s++;
     }
 
+    // integer part
+    while ('0' <= *s && *s <= '9') {
+        n = n * 10.0 + (*s - '0');
+        s++;
+    }
 
     // fractional part
     if (*s == '.') {
@@ -114,8 +122,7 @@ atof(const char *s)
             s++;
         }
     }
-
-    return n;
+    return sign * n;
 }
 
 void*

@@ -8,6 +8,7 @@ putc(int fd, char c)
   write(fd, &c, 1);
 }
 
+
 static void
 printint(int fd, int xx, int base, int sgn)
 {
@@ -35,7 +36,32 @@ printint(int fd, int xx, int base, int sgn)
     putc(fd, buf[i]);
 }
 
-// Print to the given fd. Only understands %d, %x, %p, %s.
+static void
+printfloat(int fd, float xx)
+{
+  if (xx < 0) {
+    putc(fd, '-');
+    xx = -xx;
+  }
+
+  // integer part
+  int intpart = (int)xx;
+  printint(fd, intpart, 10, 1);
+
+  // decimal point
+  putc(fd, '.');
+
+  // fractional part (fixed 6 digits)
+  float frac = xx - intpart;
+  for (int i = 0; i < 6; i++) {
+    frac *= 10;
+    int digit = (int)frac;
+    putc(fd, '0' + digit); //to pass digit as a char
+    frac -= digit;
+  }
+}
+
+// Print to the given fd. Only understands %d, %x, %p, %s. // added %f
 void
 printf(int fd, const char *fmt, ...)
 {
@@ -74,7 +100,11 @@ printf(int fd, const char *fmt, ...)
         ap++;
       } else if(c == '%'){
         putc(fd, c);
-      } else {
+      }else if(c == 'f'){ //add a case for float
+        double f = *(double*)ap;       // printf makes floats doubles 
+        printfloat(fd, float(f));
+        ap += sizeof(double)/sizeof(uint); // move argument pointer forward, not normal increment due to double size 
+      }else {
         // Unknown % sequence.  Print it to draw attention.
         putc(fd, '%');
         putc(fd, c);
