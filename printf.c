@@ -102,7 +102,7 @@ printf(int fd, const char *fmt, ...)
         putc(fd, c);
       }else if(c == 'f'){ //add a case for float
         double f = *(double*)ap;       // printf makes floats doubles 
-        printfloat(fd, float(f));
+        printfloat(fd, (float)f);
         ap += sizeof(double)/sizeof(uint); // move argument pointer forward, not normal increment due to double size 
       }else {
         // Unknown % sequence.  Print it to draw attention.

@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <string.h>
+#include "types.h"
+#include "user.h"
 
 void printstats(int argc, char* argv[]){
     float numbers[argc - 1];
@@ -13,7 +13,7 @@ void printstats(int argc, char* argv[]){
 
     // Using the functions added to ulib.c to calculate the statistics  
     min_val = min(numbers, argc - 1);
-    max_val = max(numbers, argc - 1)
+    max_val = max(numbers, argc - 1);
     avg_val = avg(numbers, argc - 1);
     // add median and stdv here
 

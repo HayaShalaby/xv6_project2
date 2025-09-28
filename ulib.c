@@ -4,6 +4,8 @@
 #include "user.h"
 #include "x86.h"
 
+void mergeSort(int arr[], int left, int right); //reference
+
 char*
 strcpy(char *s, const char *t)
 {
@@ -156,14 +158,14 @@ avg(float array[], int count){
 
 float 
 min(float array[], int count){
-    mergeSort(array, count);
+    mergeSort(array, 0, count - 1);
 
     return array[0];
 }
 
 float 
 max(float array[], int count){
-    mergeSort(array, count);
+    mergeSort(array, 0, count - 1);
 
     return array[count - 1];
 }
