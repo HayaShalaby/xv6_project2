@@ -36,7 +36,7 @@ printint(int fd, int xx, int base, int sgn)
     putc(fd, buf[i]);
 }
 
-static void
+void
 printfloat(int fd, float xx)
 {
   if (xx < 0) {
@@ -61,7 +61,7 @@ printfloat(int fd, float xx)
   }
 }
 
-// Print to the given fd. Only understands %d, %x, %p, %s. // added %f
+// Print to the given fd. Only understands %d, %x, %p, %s. // added %f and precision 
 void
 printf(int fd, const char *fmt, ...)
 {

@@ -4,7 +4,19 @@
 #include "user.h"
 #include "x86.h"
 
-void mergeSort(int arr[], int left, int right); //reference
+//  square root using Newton's method
+float 
+mysqrt(float x) 
+{
+    if (x <= 0) return 0;
+    float guess = x;
+    for (int i = 0; i < 20; i++) {   
+        guess = 0.5f * (guess + x / guess);
+    }
+    return guess;
+}
+
+void mergeSort(float arr[], int left, int right); //reference
 
 char*
 strcpy(char *s, const char *t)
@@ -140,44 +152,17 @@ memmove(void *vdst, const void *vsrc, int n)
   return vdst;
 }
 
-float 
-avg(float array[], int count){
-    // A function to calculate the average of a given float array of numbers 
-    float sum, avg; 
-    sum = 0;
-
-    for(int i = 0; i < count; i = i + 1){
-        sum = sum + array[i];
-    }
 
 
-    avg = sum / count;
-
-    return avg;
-}
-
-float 
-min(float array[], int count){
-    mergeSort(array, 0, count - 1);
-
-    return array[0];
-}
-
-float 
-max(float array[], int count){
-    mergeSort(array, 0, count - 1);
-
-    return array[count - 1];
-}
-
-void merge(int arr[], int left, int mid, int right) 
+// function to merge two sorted halves
+void merge(float arr[], int left, int mid, int right) 
 {
     // calculate sizes of the two halves
     int n1 = mid - left + 1;
     int n2 = right - mid;
     
     // temporary arrays for left and right halves
-    int L[n1], R[n2];
+    float L[n1], R[n2];
     
     // copy data to temporary arrays L[] and R[]
     for (int i = 0; i < n1; i++)
@@ -226,7 +211,7 @@ void merge(int arr[], int left, int mid, int right)
 }
 
 // recursive merge sort function
-void mergeSort(int arr[], int left, int right) 
+void mergeSort(float arr[], int left, int right) 
 {
     if (left < right) 
     {
