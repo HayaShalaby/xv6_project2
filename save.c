@@ -4,11 +4,10 @@
 #include "fcntl.h"
 
 void save(int argc, char*argv[]){
-	//If true it will store a +ve number if false it will store -1 
-	int file = open(argv[1], O_WRONLY); // if the file exists then open and write
+	int file = open(argv[1], O_WRONLY | O_TRUNC); // if the file exists then open and write
 	//to it directly
 	if(file < 0){
-	 file = open(argv[1], O_CREATE | O_WRONLY); // if it doesnt exist create it (in the writing mode )and open it
+	 file = open(argv[1], O_CREATE | O_WRONLY | O_TRUNC); // if it doesnt exist create it (in the writing mode )and open it
 	}
 	
 	//file cannot be opened

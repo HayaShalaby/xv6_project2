@@ -16,6 +16,8 @@
 #include "file.h"
 #include "fcntl.h"
 
+extern void itrunc(struct inode *);
+
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
 static int
@@ -312,6 +314,9 @@ sys_open(void)
       end_op();
       return -1;
     }
+     if(omode & O_TRUNC){
+  itrunc(ip);
+  }
   }
 
   if((f = filealloc()) == 0 || (fd = fdalloc(f)) < 0){
