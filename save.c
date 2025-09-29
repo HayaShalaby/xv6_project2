@@ -1,5 +1,7 @@
 #include "types.h"
 #include "user.h"
+#include "stat.h"
+#include "fcntl.h"
 
 void save(int argc, char*argv[]){
 	//If true it will store a +ve number if false it will store -1 
