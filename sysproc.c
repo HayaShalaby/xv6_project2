@@ -88,4 +88,17 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+
+};
+static long time_offset_seconds = 0;
+uint
+sys_gettimeofday(void)
+{
+  struct rtcdate r;
+  cmostime(&r);
+
+  // Print current time
+  cprintf("Date: %d/%d/%d Time: %d:%d:%d\n",
+          r.day, r.month, r.year, r.hour, r.minute, r.second);
+  return 0;
 }

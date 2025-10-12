@@ -1,6 +1,5 @@
 #include "types.h"
 #include "user.h"
-
 float min(float array[], int count){
     mergeSort(array, 0, count - 1);
 
