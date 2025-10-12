@@ -102,3 +102,40 @@ sys_gettimeofday(void)
           r.day, r.month, r.year, r.hour, r.minute, r.second);
   return 0;
 }
+
+int
+sys_truncate(void)
+{
+	char path[MAXPATH];
+    int length;
+    struct inode *ip;
+
+    // Get arguments from user
+    if (argstr(0, path, MAXPATH) < 0 || argint(1, &length) < 0)
+        return -1;
+
+    begin_op();                      // start filesystem transaction
+    if ((ip = namei(path)) == 0) {   // find inode by path
+        end_op();
+        return -1;                   // file not found
+    }
+
+    ilock(ip);
+
+    // Only truncate regular files (e.g. not directories)
+    if (ip->type != T_FILE) {
+        iunlockput(ip);
+        end_op();
+        return -1;
+    }
+
+    // If length is less than current size, shrink
+    if (length < ip->size) {
+        itrunc(ip, length);
+    }
+
+    iunlockput(ip);
+    end_op();
+
+    return 0;
+}

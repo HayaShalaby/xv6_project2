@@ -104,6 +104,7 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern uint sys_gettimeofday(void);
+extern int sys_truncate(void);
 
 
 static int (*syscalls[])(void) = {
@@ -129,8 +130,7 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 [SYS_gettimeofday]    sys_gettimeofday,
-
-
+[SYS_getcwd] sys_truncate
 };
 
 void
