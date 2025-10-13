@@ -240,6 +240,37 @@ bad:
   return -1;
 }
 
+int
+sys_truncate(void)
+{
+	char *path;
+    int length;
+    struct inode *ip;
+
+    // Get commandline arguments from user 
+    if (argstr(0, &path) < 0 || argint(1, &length) < 0)
+        return -1;
+
+    // Used for atomicity with file transactions 
+    begin_op();
+
+    // Check file exists
+    if ((ip = namei(path)) == 0) {
+        end_op();
+        return -1;
+    }
+
+    // ilock and iunlockput are other concurrency control mechanisms 
+    ilock(ip);
+    // xv6 only supports truncating to zero
+    if (length == 0)
+        itrunc(ip);
+    iunlockput(ip);
+    end_op();
+
+    return 0;
+}
+
 static struct inode*
 create(char *path, short type, short major, short minor)
 {
