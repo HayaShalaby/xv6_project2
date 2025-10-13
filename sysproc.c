@@ -8,6 +8,8 @@
 #include "proc.h"
 #include "fs.h"
 
+extern struct proc *initproc;
+
 int
 sys_fork(void)
 {
@@ -104,3 +106,15 @@ sys_gettimeofday(void)
   return 0;
 }
 
+uint 
+sys_getppid(void) 
+{ 
+    struct proc *p = myproc(); 
+   
+    // if the process has no parent (ex: init) 
+    if(p == initproc || p->parent == 0) 
+    { 
+      return 0; // 0 indicates no parent 
+    } 
+    return p->parent->pid; 
+}

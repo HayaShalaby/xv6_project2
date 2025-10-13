@@ -24,6 +24,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int gettimeofday(void);
+int getppid(void);
 int truncate(void);
 
 // ulib.c

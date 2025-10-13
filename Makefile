@@ -184,6 +184,7 @@ UPROGS=\
 	_printstats\
 	_sort\
 	_save\
+	_getppid_test\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
